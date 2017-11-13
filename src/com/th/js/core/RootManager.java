@@ -25,7 +25,7 @@ public class RootManager {
 	 */
 	public void fullDrive(JsBaseDrive jsBaseDrive) {
 		jsBaseDrive.result.change(getCurrentStatus());
-		jsBaseDrive.result.setLastContent(currentContent);
+		jsBaseDrive.result.setBeforeContent(currentContent);
 	}
 
 	/**

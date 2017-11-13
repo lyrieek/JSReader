@@ -8,8 +8,6 @@ import com.th.js.container.AnalysisResult;
  */
 public class JSProcessor extends JsBaseDrive {
 
-	public final static String MARKS = ".={}:;,()[]";
-
 	public JSProcessor(Variables vals) {
 		super(vals);
 	}
@@ -23,7 +21,7 @@ public class JSProcessor extends JsBaseDrive {
 		}
 		result.further();
 		if (result.is(Status.STRING)) {
-			string(scanner.item());
+			string();
 		} else if (result.is(Status.REMARK)) {
 			remark(scanner);
 		}
@@ -34,8 +32,14 @@ public class JSProcessor extends JsBaseDrive {
 		String item = scanner.item();
 		if (item.trim().isEmpty()) {
 			result.temporary(Status.EMPTY);
-		} else if (item.length() == 1 && MARKS.contains(item)) {
+		} else if (item.length() == 1 && KeyWords.MARKS.contains(item)) {
 			result.temporary(Status.MARK);
+		} else if (item.matches("((\\-)?\\d{1,}(\\.{1}\\d+)?)")) {
+			result.temporary(Status.NUMBER);
+		} else if (KeyWords.contains(item)) {
+			result.temporary(Status.KEYWORDS);
+		} else if (item.equals("true") || item.equals("false")) {
+			result.temporary(Status.BOOLEAN);
 		} else if (item.matches("('|\"|`)")) {
 			result.change(Status.STRING);
 			result.lazyCommit();
@@ -47,12 +51,6 @@ public class JSProcessor extends JsBaseDrive {
 			scanner.mark();
 			scanner.hang(item.equals("//") ? JSScanner.lineSeparator : "\\*/");
 			storage.update("last.remark.identifier", item.equals("//") ? JSScanner.lineSeparator : "*/");
-		} else if (item.matches("((\\-)?\\d{1,}(\\.{1}\\d+)?)")) {
-			result.temporary(Status.NUMBER);
-		} else if (KeyWords.contains(item)) {
-			result.temporary(Status.KEYWORDS);
-		} else if (item.equals("true") || item.equals("false")) {
-			result.temporary(Status.BOOLEAN);
 		}
 	}
 
@@ -68,7 +66,7 @@ public class JSProcessor extends JsBaseDrive {
 		result.lazyChange(Status.READ);
 	}
 
-	public void string(String item) {
+	public void string() {
 		if (!item.equals(storage.getString("last.string.identifier"))) {
 			result.lazyCommit();
 			return;

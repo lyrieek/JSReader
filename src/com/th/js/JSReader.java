@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import com.th.js.core.ContextBlack;
+import com.th.js.container.ContextBlack;
 import com.th.js.core.JSDocument;
 import com.th.js.core.JSFactory;
 import com.th.js.core.Status;

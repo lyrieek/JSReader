@@ -1,8 +1,13 @@
-package com.th.js.core;
+package com.th.js.container;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.th.js.core.CharPoint;
+import com.th.js.core.Status;
 
 /** 
- * @author user
- *
+ * 代码块
  */
 public class ContextBlack {
 
@@ -16,7 +21,9 @@ public class ContextBlack {
 
 	private StringBuffer item;
 
-	private ContextBlack base;
+	private ContextBlack father;
+	
+	private List<ContextBlack> children;
 
 	private boolean isClosed;
 
@@ -29,10 +36,28 @@ public class ContextBlack {
 		isClosed = false;
 		id = Integer.toHexString((int) (Math.random() * 0xFFFFFFF))
 				+ Integer.toHexString((int) (Math.random() * 0xFFFFFFF)) + this.hashCode();
+		children = new ArrayList<>();
+	}
+
+	private ContextBlack() {
+		this(new CharPoint());
 	}
 
 	public ContextBlack(long index) {
 		this(CharPoint.get(index));
+	}
+	
+	public static ContextBlack builder(String text) {
+		ContextBlack cb = new ContextBlack();
+		cb.full(text);
+		return cb;
+	}
+	
+	public static ContextBlack builder(CharPoint point,String text,Status status) {
+		ContextBlack cb = builder(text);
+		cb.setStartIndex(point);
+		cb.setStatus(status);
+		return cb;
 	}
 
 	public void full(String text) {
@@ -93,14 +118,6 @@ public class ContextBlack {
 		this.startPoint = startPoint;
 	}
 
-	public void setBase(ContextBlack base) {
-		this.base = base;
-	}
-
-	public ContextBlack getBase() {
-		return base;
-	}
-
 	public CharPoint getEndInedx() {
 		return endPoint;
 	}
@@ -131,6 +148,22 @@ public class ContextBlack {
 	
 	public Status status() {
 		return status;
+	}
+
+	public void setFather(ContextBlack cb) {
+		this.father = cb;
+	}
+
+	public ContextBlack getFather() {
+		return father;
+	}
+	
+	public void setChildren(List<ContextBlack> children) {
+		this.children = children;
+	}
+	
+	public List<ContextBlack> getChildren() {
+		return children;
 	}
 	
 	@Override

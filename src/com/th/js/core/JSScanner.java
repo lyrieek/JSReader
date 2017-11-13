@@ -57,7 +57,7 @@ public class JSScanner {
 	}
 
 	/**
-	 * 记住当前位置
+	 * 标记当前位置
 	 */
 	public void mark() {
 		markIndex = point;
@@ -93,7 +93,7 @@ public class JSScanner {
 	}
 	
 	/**
-	 * 挂起当前搜索 临时更换搜索
+	 * 挂起当前搜索并更换新搜索
 	 */
 	public void hang(String newRegex) {
 		hangMatcher = matcher;
@@ -101,7 +101,7 @@ public class JSScanner {
 	}
 	
 	/**
-	 * 释放当前的搜索,使用被挂起的搜索
+	 * 释放被挂起的搜索
 	 */
 	public void release() {
 		matcher = hangMatcher;

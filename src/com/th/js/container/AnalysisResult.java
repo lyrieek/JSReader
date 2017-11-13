@@ -1,7 +1,6 @@
 package com.th.js.container;
 
 import com.th.js.core.CharPoint;
-import com.th.js.core.ContextBlack;
 import com.th.js.core.Status;
 
 public class AnalysisResult {
@@ -17,9 +16,9 @@ public class AnalysisResult {
 	private Status nextStatus;
 	
 	/**
-	 * 最后追加的内容
+	 * 上一次的内容
 	 */
-	private Content lastContent;
+	private Content beforeContent;
 	
 	/**
 	 * 此次返回的内容
@@ -46,23 +45,17 @@ public class AnalysisResult {
 	}
 	
 	/**
+	 * 填充文本
 	 * @param text
 	 */
 	public void full(String text) {
-		this.content = new Content(builderContextBlack(text));
+		this.content = new Content(ContextBlack.builder(point, text, status));
 	}
 
 	public void prepend(String text) {
-		this.content.prepend(builderContextBlack(text));;
+		this.content.prepend(ContextBlack.builder(point, text, status));;
 	}
 	
-	public ContextBlack builderContextBlack(String text) {
-		ContextBlack cb = new ContextBlack(point);
-		cb.full(text);
-		cb.setStatus(status);
-		return cb;
-	}
-
 	/**
 	 * 合并
 	 */
@@ -72,11 +65,11 @@ public class AnalysisResult {
 	}
 	
 	/**
-	 * 推进
+	 * 推进,合并上一次的内容
 	 */
 	public void further() {
-		lastContent.addAll(content.getAllBlack());
-		content = lastContent;
+		beforeContent.appendAll(content.getAllBlack());
+		content = beforeContent;
 	}
 	
 	/**
@@ -85,8 +78,8 @@ public class AnalysisResult {
 	 */
 	public void change(Status status) {
 		this.status = nextStatus = status;
-		if (content.getLastContext() != null) {
-			content.getLastContext().setStatus(status);
+		if (content.last() != null) {
+			content.last().setStatus(status);
 		}
 	}
 	
@@ -97,8 +90,8 @@ public class AnalysisResult {
 	public void temporary(Status status) {
 		nextStatus = this.status;
 		this.status = status;
-		if (content.getLastContext() != null) {
-			content.getLastContext().setStatus(status);
+		if (content.last() != null) {
+			content.last().setStatus(status);
 		}
 	}
 
@@ -111,6 +104,10 @@ public class AnalysisResult {
 		return this.status.equals(status);
 	}
 	
+	/**
+	 * 更新下一次的状态
+	 * @param status
+	 */
 	public void lazyChange(Status status) {
 		nextStatus = status;
 	}
@@ -131,8 +128,8 @@ public class AnalysisResult {
 		this.point = point;
 	}
 	
-	public void setLastContent(Content content) {
-		this.lastContent = content;
+	public void setBeforeContent(Content content) {
+		this.beforeContent = content;
 	}
 
 	public void clear() {

@@ -3,15 +3,9 @@ package com.th.js.container;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.th.js.core.ContextBlack;
-
 public class Content {
 
 	private LinkedList<ContextBlack> black;
-
-	private ContextBlack lastContext;
-
-	private long movePoint = 0;
 
 	public Content() {
 		black = new LinkedList<>();
@@ -19,34 +13,60 @@ public class Content {
 
 	public Content(ContextBlack cb) {
 		this();
-		add(cb);
+		append(cb);
 	}
 
-	public void add(ContextBlack cb) {
-		movePoint += cb.length();
-		black.add(lastContext = cb);
+	public Content(String text) {
+		this(ContextBlack.builder(text));
 	}
 
-	public void addAll(List<ContextBlack> allBlack) {
-		black.addAll(allBlack);
+	public static void main(String[] args) {
+		Content content = new Content();
+		content.append("1231");
+		content.append("adfsfd");
+		content.append("bgre43");
+		content.append("cre4r");
+		content.append("dgre43");
+		// System.out.println(content.getFirstContext());
+		// System.out.println(content.getLastContext());
+		System.out.println(content.merge().getChildren());
+	}
+
+	public void append(String text) {
+		append(ContextBlack.builder(text));
+	}
+
+	public void append(ContextBlack cb) {
+		black.add(cb);
+	}
+
+	public boolean appendAll(List<ContextBlack> allBlack) {
+		if (allBlack == null || allBlack.size() == 0) {
+			return false;
+		}
+		return black.addAll(allBlack);
 	}
 
 	public void prepend(ContextBlack black) {
 		getAllBlack().addFirst(black);
 	}
 
-	public void merge() {
-		ContextBlack cBlack = black.getFirst();
-		for (int i = 1; i < black.size(); i++) {
-			cBlack.append(black.get(i).item());
+	public ContextBlack merge() {
+		if (isEmpty()) {
+			return null;
 		}
-		cBlack.setEndInedx(black.getLast().getEndInedx());
+		if (isSingle()) {
+			return black.get(0);
+		}
+		ContextBlack result = black.getFirst();
+		for (int i = 1; i < black.size() - 1; i++) {
+			result.getChildren().add(black.get(i));
+			result.append(black.get(i).item());
+		}
+		result.append(black.getLast());
 		black.clear();
-		black.add(cBlack);
-	}
-
-	public ContextBlack getLastContext() {
-		return lastContext;
+		black.add(result);
+		return result;
 	}
 
 	public boolean isEmpty() {
@@ -61,27 +81,41 @@ public class Content {
 		return black;
 	}
 
-	public ContextBlack getSingleContextBlack() {
+	/**
+	 * size is 1:return this; <br />
+	 * size is 0 or more:return null;
+	 */
+	public ContextBlack getSingle() {
 		return isSingle() ? black.get(0) : null;
-	}
-
-	public long getMovePoint() {
-		return movePoint;
 	}
 
 	public void clear() {
 		black.clear();
 	}
 
+	public ContextBlack last() {
+		if (isEmpty()) {
+			return null;
+		}
+		return black.getLast();
+	}
+
+	public ContextBlack first() {
+		if (isEmpty()) {
+			return null;
+		}
+		return black.getFirst();
+	}
+
 	@Override
 	public String toString() {
 		if (isEmpty()) {
-			return "Content [black is empty, movePoint=" + movePoint + "]";
+			return "Content [black is empty]";
 		}
 		if (isSingle()) {
-			return "Content [single black=" + black.get(0) + ", movePoint=" + movePoint + "]";
+			return "Content [single:" + black.get(0) + "]";
 		}
-		return "Content [black=" + black + ", movePoint=" + movePoint + "]";
+		return "Content [black=" + black + "]";
 	}
 
 }
