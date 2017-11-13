@@ -34,7 +34,7 @@ public class JSScanner {
 //			if (reader.item().equals("15")) {
 //				reader.release();
 //			}
-//			System.out.println(reader.item);
+//			System.out.println(reader.column());
 //		}
 //	}
 

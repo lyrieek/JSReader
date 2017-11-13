@@ -17,25 +17,29 @@ public class JSReader {
 	public final static String charset = "UTF-8";
 
 	public static void main(String[] args) throws Exception {
-		String module = "repCat"; // member
+		String module = "tag"; // member
 		JSFactory js = new JSFactory();
-		js.load(FileUtils.readFileToString(new File("g:/cms/CmsWebApp/client/app/" + module + "/" + module + ".controller.js"),
-				Charset.forName(charset)));
-//				js.load(FileUtils.readFileToString(new File("F:\\lodash.src.js"),Charset.forName(charset)));
-//				js.load(FileUtils.readFileToString(new File("F:\\jquery-baidu-1.10.2.min.js"),Charset.forName(charset)));
-//		double[] times = new double[5];
-//		js.scanner();
-//		for (int i = 0; i < times.length; i++) {
-//			System.gc();
-//			System.gc();
-//			long start = System.currentTimeMillis();
-//			js.scanner();
-//			times[i] = (System.currentTimeMillis() - start) / 1000D;
-////			System.out.println(times[i] = ((System.currentTimeMillis() - start) / 1000D));
-//			System.out.println(times[i]);
-//		}
+		// js.load(FileUtils.readFileToString(
+		// new File("g:/cms/CmsWebApp/client/app/" + module + "/" + module +
+		// ".controller.js"),
+		// Charset.forName(charset)));
+		// js.load(FileUtils.readFileToString(new File("F:\\lodash.src.js"),
+		// Charset.forName(charset)));
+		js.load(FileUtils.readFileToString(new File("F:\\jquery-baidu-1.10.2.min.js"), Charset.forName(charset)));
+		// double[] times = new double[5];
+		// js.scanner();
+		// for (int i = 0; i < times.length; i++) {
+		// System.gc();
+		// System.gc();
+		// long start = System.currentTimeMillis();
+		// js.scanner();
+		// times[i] = (System.currentTimeMillis() - start) / 1000D;
+		//// System.out.println(times[i] = ((System.currentTimeMillis() - start)
+		// / 1000D));
+		// System.out.println(times[i]);
+		// }
 		js.scanner().printf();
-		 write(js.scanner());
+		write(js.scanner());
 	}
 
 	public static void write(JSDocument doc) throws IOException {
@@ -51,10 +55,12 @@ public class JSReader {
 				item = wrap(item, "color:#5c6370;font-style: italic;");
 			} else if (black.status() == Status.STRING) {
 				item = wrap(item, "color:#98c379;");
-			} else if (black.status() == Status.MARK) {
+			} else if (black.status() == Status.MARK || black.status() == Status.DECLARE) {
 				item = wrap(item, "color:#abb2bf;");
 			} else if (black.status() == Status.NUMBER || black.status() == Status.BOOLEAN) {
 				item = wrap(item, "color:#d19a66;");
+			} else if (black.status() == Status.REGEX) {
+				item = wrap(item, "color:red;");
 			}
 			buffer.append(item);
 		}

@@ -11,6 +11,11 @@ public class AnalysisResult {
 	private Status status;
 	
 	/**
+	 * 上一次的状态
+	 */
+	private Status lastStatus;
+	
+	/**
 	 * 推测下一次的状态
 	 */
 	private Status nextStatus;
@@ -62,8 +67,8 @@ public class AnalysisResult {
 	 * 添加到之前
 	 * @param text
 	 */
-	public void prepend(String text) {
-		this.content.prepend(ContextBlack.builder(point, text, status));;
+	public void prepend(CharPoint charPoint,String text) {
+		this.content.prepend(ContextBlack.builder(charPoint, text, status));
 	}
 	
 	/**
@@ -74,6 +79,7 @@ public class AnalysisResult {
 		allow = true;
 		return content.merge();
 	}
+
 	
 	/**
 	 * 推进,合并上一次的内容
@@ -142,6 +148,10 @@ public class AnalysisResult {
 	public void setBeforeContent(Content content) {
 		this.beforeContent = content;
 	}
+	
+	public Content getBeforeContent() {
+		return beforeContent;
+	}
 
 	public void clear() {
 		content.clear();
@@ -155,11 +165,17 @@ public class AnalysisResult {
 		return allow;
 	}
 	
+	public void setLastStatus(Status lastStatus) {
+		this.lastStatus = lastStatus;
+	}
+
+	public Status getLastStatus() {
+		return lastStatus;
+	}
+	
 	@Override
 	public String toString() {
 		return "AnalysisResult [status=" + status + ", content=" + content + "]";
 	}
-
-	
 	
 }

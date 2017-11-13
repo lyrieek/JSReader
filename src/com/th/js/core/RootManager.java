@@ -39,6 +39,7 @@ public class RootManager {
 		if (result.isAllow()) {
 			document.append(currentContent);
 		}
+		result.setLastStatus(currentStatus);
 		currentStatus = result.getNextStatus();
 	}
 

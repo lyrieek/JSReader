@@ -20,17 +20,34 @@ public class JSProcessor extends JsBaseDrive {
 			return result;
 		}
 		result.further();
-		if (result.is(Status.STRING)) {
-			string();
-		} else if (result.is(Status.REMARK)) {
-			remark(scanner);
-		}
+		// if (result.is(Status.STRING)) {
+		// string(scanner);
+		// } else if (result.is(Status.REMARK)) {
+		// remark(scanner);
+		// }
+		boolean equals = result.is(Status.STRING) && intercept(storage.getString("last.string.identifier"));
+		equals = equals || (result.is(Status.REMARK) && intercept(storage.getString("last.remark.identifier")));
+		equals = equals || (result.is(Status.REGEX) && item.length() % 2 == 1 && intercept(item));
 		return result;
+	}
+
+	public boolean intercept(String equalsText) {
+		if (!item.equals(equalsText)) {
+			result.lazyCommit();
+			return false;
+		}
+		scanner.release();
+		result.prepend((CharPoint) storage.get("last.point"), scanner.pull());
+		result.merge();
+		result.lazyChange(Status.READ);
+		return true;
 	}
 
 	public void read(JSScanner scanner) {
 		if (item.trim().isEmpty()) {
 			result.temporary(Status.EMPTY);
+		} else if (item.equals("=")) {
+			result.temporary(Status.DECLARE);
 		} else if (item.length() == 1 && KeyWords.MARKS.contains(item)) {
 			result.temporary(Status.MARK);
 		} else if (item.matches("((\\-)?\\d{1,}(\\.{1}\\d+)?)")) {
@@ -41,37 +58,24 @@ public class JSProcessor extends JsBaseDrive {
 			result.temporary(Status.BOOLEAN);
 		} else if (item.matches("('|\"|`)")) {
 			result.change(Status.STRING);
-			result.lazyCommit();
+			putIntercept("(\\\\)?" + item);
 			storage.update("last.string.identifier", item);
 		} else if (item.equals("//") || item.equals("/*")) {
 			result.change(Status.REMARK);
-			result.lazyCommit();
-			result.clear();
-			scanner.mark();
-			scanner.hang(item.equals("//") ? JSScanner.lineSeparator : "\\*/");
+			putIntercept(item.equals("//") ? JSScanner.lineSeparator : "\\*/");
 			storage.update("last.remark.identifier", item.equals("//") ? JSScanner.lineSeparator : "*/");
+		} else if (item.equals("/") && result.getLastStatus() == Status.DECLARE) {
+			result.change(Status.REGEX);
+			putIntercept("\\\\*/");
 		}
 	}
 
-	public void remark(JSScanner scanner) {
-		String item = scanner.item();
-		if (!item.equals(storage.getString("last.remark.identifier"))) {
-			result.lazyCommit();
-			return;
-		}
-		scanner.release();
-		result.prepend(scanner.pull());
-		result.merge();
-		result.lazyChange(Status.READ);
-	}
-
-	public void string() {
-		if (!item.equals(storage.getString("last.string.identifier"))) {
-			result.lazyCommit();
-			return;
-		}
-		result.merge();
-		result.lazyChange(Status.READ);
+	public void putIntercept(String regex) {
+		result.lazyCommit();
+		result.clear();
+		storage.update("last.point", result.point());
+		scanner.mark();
+		scanner.hang(regex);
 	}
 
 }

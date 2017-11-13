@@ -16,17 +16,17 @@ public class Content {
 		append(cb);
 	}
 
-	public static void main(String[] args) {
-		Content content = new Content();
-		// content.append("1231");
-		// content.append("adfsfd");
-		// content.append("bgre43");
-		// content.append("cre4r");
-		// content.append("dgre43");
-		// System.out.println(content.getFirstContext());
-		// System.out.println(content.getLastContext());
-		System.out.println(content.merge().children());
-	}
+	// public static void main(String[] args) {
+	// Content content = new Content();
+	// content.append("1231");
+	// content.append("adfsfd");
+	// content.append("bgre43");
+	// content.append("cre4r");
+	// content.append("dgre43");
+	// System.out.println(content.getFirstContext());
+	// System.out.println(content.getLastContext());
+	// System.out.println(content.merge().children());
+	// }
 
 	public void append(ContextBlack cb) {
 		black.add(cb);

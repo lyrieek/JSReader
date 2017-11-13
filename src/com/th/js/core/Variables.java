@@ -27,7 +27,7 @@ public class Variables extends LinkedList<DataValue> {
 		return temp.toString();
 	}
 
-	public void update(String key, String item) {
+	public void update(String key, Object item) {
 		for (DataValue value : this) {
 			if (value.is(key)) {
 				value.update(item);

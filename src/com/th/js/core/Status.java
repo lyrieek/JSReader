@@ -26,6 +26,9 @@ public enum Status {
 	REGEX,
 	
 	//空白
-	EMPTY
+	EMPTY, 
+	
+	//赋值
+	DECLARE
 	
 }

@@ -49,9 +49,10 @@ public class ContextBlack {
 		return cb;
 	}
 
-	public void full(String text) {
+	public ContextBlack full(String text) {
 		setItem(text);
 		close();
+		return this;
 	}
 
 	public void append(Object chars) {
@@ -153,5 +154,5 @@ public class ContextBlack {
 	public String toString() {
 		return item();
 	}
-	
+ 	
 }

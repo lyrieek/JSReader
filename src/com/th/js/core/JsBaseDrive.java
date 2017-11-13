@@ -31,6 +31,7 @@ public abstract class JsBaseDrive {
 			System.err.println("JsDrive.translation():AnalysisResult need instance,item:" + scanner.item());
 			return null;
 		}
+		this.scanner = scanner;
 		result.initPoint(scanner.getCharPoint());
 		result.full(item = scanner.item());
 		return result;
