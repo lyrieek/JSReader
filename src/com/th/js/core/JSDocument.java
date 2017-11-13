@@ -39,9 +39,9 @@ public class JSDocument {
 	public void printf() {
 		StringBuffer buffer = new StringBuffer();
 		for (ContextBlack contextBlack : codes) {
-//			if (!contextBlack.of(Status.REMARK)) {
-//				continue;
-//			}
+			if (!contextBlack.of(Status.READ)) {
+				continue;
+			}
 			String item = contextBlack.item();
 			System.out.print(contextBlack.getStartIndex() + ">>");
 			if (contextBlack.status() != null) {

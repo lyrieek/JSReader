@@ -9,11 +9,11 @@ public abstract class JsBaseDrive {
 
 	protected AnalysisResult result;
 	protected Variables storage;
-	protected CharPoint charPoint;
 	protected JSScanner scanner;
 	protected String item;
 
 	public JsBaseDrive(Variables vals) {
+		result = new AnalysisResult();
 		storage = vals;
 	}
 
@@ -32,7 +32,7 @@ public abstract class JsBaseDrive {
 			return null;
 		}
 		result.full(item = scanner.item());
-		setCharPoint(scanner.getCharPoint());
+		result.setPoint(scanner.getCharPoint());
 		return result;
 	}
 
@@ -41,17 +41,12 @@ public abstract class JsBaseDrive {
 	 * @param manager
 	 */
 	public void instance(RootManager manager) {
-		result = new AnalysisResult();
+		result.restore();
 		manager.fullDrive(this);
 	}
 	
-	public void setCharPoint(CharPoint charPoint) {
-		this.charPoint = charPoint;
-		result.setPoint(charPoint);
+	public AnalysisResult getResult() {
+		return result;
 	}
 	
-	public CharPoint getCharPoint() {
-		return charPoint;
-	}
-
 }

@@ -6,20 +6,41 @@ import com.th.js.core.Status;
 
 public class AnalysisResult {
 	
+	/**
+	 * 此次扫描到的状态
+	 */
 	private Status status;
 	
+	/**
+	 * 推测下一次的状态
+	 */
 	private Status nextStatus;
 	
+	/**
+	 * 最后追加的内容
+	 */
 	private Content lastContent;
 	
+	/**
+	 * 此次返回的内容
+	 */
 	private Content content;
 	
+	/**
+	 * 切入点
+	 */
 	private CharPoint point;
 	
+	/**
+	 * 允许被载入
+	 */
 	private boolean allow = true;
 	
-	
 	public AnalysisResult() {
+		restore();
+	}
+
+	public void restore() {
 		status = Status.READ;
 		content = new Content();
 	}
@@ -42,6 +63,9 @@ public class AnalysisResult {
 		return cb;
 	}
 
+	/**
+	 * 合并
+	 */
 	public void merge() {
 		content.merge();
 		allow = true;
@@ -56,7 +80,7 @@ public class AnalysisResult {
 	}
 	
 	/**
-	 * 更换最后一次与以后的状态
+	 * 更换今后的状态
 	 * @param status
 	 */
 	public void change(Status status) {
@@ -67,13 +91,15 @@ public class AnalysisResult {
 	}
 	
 	/**
-	 * 变更当前状态(瞬间消失)
+	 * 临时的变更当前状态
 	 * @param status
 	 */
 	public void temporary(Status status) {
-		Status source = this.status;
-		change(status);
-		lazyChange(source);
+		nextStatus = this.status;
+		this.status = status;
+		if (content.getLastContext() != null) {
+			content.getLastContext().setStatus(status);
+		}
 	}
 
 	
@@ -127,11 +153,5 @@ public class AnalysisResult {
 	}
 
 	
-	
-}
-enum Type{
-	
-	ADD,
-	CHANGE
 	
 }

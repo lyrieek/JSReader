@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 核心扫描器<br />
  * 暂时使用此扫描引擎
  *
  */

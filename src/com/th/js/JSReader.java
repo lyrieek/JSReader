@@ -17,15 +17,15 @@ public class JSReader {
 	public final static String charset = "UTF-8";
 
 	public static void main(String[] args) throws Exception {
-		String module = "member"; // member
+		String module = "repCat"; // member
 		JSFactory js = new JSFactory();
 		js.load(FileUtils.readFileToString(
 				new File("g:/cms/CmsWebApp/client/app/" + module + "/" + module + ".controller.js"),
 				Charset.forName(charset)));
 		long start = System.currentTimeMillis();
-//		 js.scanner().printf();
+		 js.scanner().printf();
 		System.out.println((System.currentTimeMillis() - start) / 1000D);
-		write(js.scanner());
+//		write(js.scanner());
 	}
 
 	public static void write(JSDocument doc) throws IOException {

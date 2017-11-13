@@ -33,8 +33,10 @@ public class JSFactory {
 			handle.instance(manager);
 			
 			//处理器开始依据当前文本翻译代码
+			handle.translation(reader);
+			
 			//管理器接收处理器的翻译结果
-			manager.receive(handle.translation(reader));
+			manager.receive(handle.getResult());
 		}
 		return manager.getDocument();
 	}
