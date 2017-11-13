@@ -29,7 +29,6 @@ public class JSProcessor extends JsBaseDrive {
 	}
 
 	public void read(JSScanner scanner) {
-		String item = scanner.item();
 		if (item.trim().isEmpty()) {
 			result.temporary(Status.EMPTY);
 		} else if (item.length() == 1 && KeyWords.MARKS.contains(item)) {
