@@ -16,24 +16,16 @@ public class Content {
 		append(cb);
 	}
 
-	public Content(String text) {
-		this(ContextBlack.builder(text));
-	}
-
 	public static void main(String[] args) {
 		Content content = new Content();
-		content.append("1231");
-		content.append("adfsfd");
-		content.append("bgre43");
-		content.append("cre4r");
-		content.append("dgre43");
+		// content.append("1231");
+		// content.append("adfsfd");
+		// content.append("bgre43");
+		// content.append("cre4r");
+		// content.append("dgre43");
 		// System.out.println(content.getFirstContext());
 		// System.out.println(content.getLastContext());
-		System.out.println(content.merge().getChildren());
-	}
-
-	public void append(String text) {
-		append(ContextBlack.builder(text));
+		System.out.println(content.merge().children());
 	}
 
 	public void append(ContextBlack cb) {
@@ -56,11 +48,11 @@ public class Content {
 			return null;
 		}
 		if (isSingle()) {
-			return black.get(0);
+			return black.getFirst();
 		}
 		ContextBlack result = black.getFirst();
 		for (int i = 1; i < black.size() - 1; i++) {
-			result.getChildren().add(black.get(i));
+			result.children().add(black.get(i));
 			result.append(black.get(i).item());
 		}
 		result.append(black.getLast());

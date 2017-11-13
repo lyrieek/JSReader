@@ -25,18 +25,18 @@ public class JSScanner {
 		change(searchChar);
 	}
 
-	public static void main(String[] args) {
-		JSScanner reader = new JSScanner("123123 asdasd 583245 i sfsd sfdsf asdada 15 dsfsf 3434 fse 2", "\\S+");
-		while (reader.hasNext()) {
-			if (reader.item().equals("i")) {
-				reader.hang("\\d+");
-			}
-			if (reader.item().equals("15")) {
-				reader.release();
-			}
-			System.out.println(reader.item);
-		}
-	}
+//	public static void main(String[] args) {
+//		JSScanner reader = new JSScanner("123123 asdasd 583245 i sfsd sfdsf asdada 15 dsfsf 3434 fse 2", "\\S+");
+//		while (reader.hasNext()) {
+//			if (reader.item().equals("i")) {
+//				reader.hang("\\d+");
+//			}
+//			if (reader.item().equals("15")) {
+//				reader.release();
+//			}
+//			System.out.println(reader.item);
+//		}
+//	}
 
 	public CharPoint getCharPoint() {
 		CharPoint textPoint = new CharPoint();
@@ -53,7 +53,7 @@ public class JSScanner {
 	public int column() {
 		int lastLine = before().lastIndexOf(lineSeparator);
 		lastLine = (lastLine == -1) ? 0 : lastLine + 1;
-		return point - lastLine;
+		return point - lastLine + 1;//应当从1开始计算
 	}
 
 	/**

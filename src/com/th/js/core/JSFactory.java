@@ -3,14 +3,11 @@ package com.th.js.core;
 public class JSFactory {
 
 	private String context;
-
-//	private final static String regex = "(\\s+|(\\$)?([a-zA-Z_]+([0-9]+)?)|"
-//			+ "((\\-)?\\d{1,}(\\.{1}\\d+)?)|((\\\\)?('|\"|`))|(\\/\\/[^\n]*)|"
-//			+ "(\\/\\*(\\s|.)*?\\*\\/)|\\S)";
 	
-	//text field  number remark 
-	private final static String regex = "(\\s+|(\\$)?([a-zA-Z_]+([0-9]+)?)|"
-			+ "((\\-)?\\d{1,}(\\.{1}\\d+)?)|(/(\\*|/))|(\\/\\*(.|\\s)*?\\*\\/)|\\S)";
+	//text field  number remark
+	private final static String regex = "(([\\$a-zA-Z_]+([0-9]+)?)|"
+			+ "((\\-)?\\d{1,}(\\.{1}\\d+)?)|(/(\\*|/))|\\s+|\\S)";
+	//(\\/\\*(.|\\s)*?\\*\\/)
 
 	public void load(String context) {
 		this.context = context;

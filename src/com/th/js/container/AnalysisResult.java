@@ -39,6 +39,9 @@ public class AnalysisResult {
 		restore();
 	}
 
+	/**
+	 * 还原/初始化
+	 */
 	public void restore() {
 		status = Status.READ;
 		content = new Content();
@@ -49,19 +52,27 @@ public class AnalysisResult {
 	 * @param text
 	 */
 	public void full(String text) {
+		if (point == null) {
+			throw new NullPointerException("Need Point");
+		}
 		this.content = new Content(ContextBlack.builder(point, text, status));
 	}
 
+	/**
+	 * 添加到之前
+	 * @param text
+	 */
 	public void prepend(String text) {
 		this.content.prepend(ContextBlack.builder(point, text, status));;
 	}
 	
 	/**
 	 * 合并
+	 * @return 
 	 */
-	public void merge() {
-		content.merge();
+	public ContextBlack merge() {
 		allow = true;
+		return content.merge();
 	}
 	
 	/**
@@ -124,7 +135,7 @@ public class AnalysisResult {
 		return point;
 	}
 	
-	public void setPoint(CharPoint point) {
+	public void initPoint(CharPoint point) {
 		this.point = point;
 	}
 	

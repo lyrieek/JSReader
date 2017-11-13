@@ -13,19 +13,29 @@ import com.th.js.core.JSFactory;
 import com.th.js.core.Status;
 
 public class JSReader {
-	
+
 	public final static String charset = "UTF-8";
 
 	public static void main(String[] args) throws Exception {
 		String module = "repCat"; // member
 		JSFactory js = new JSFactory();
-		js.load(FileUtils.readFileToString(
-				new File("g:/cms/CmsWebApp/client/app/" + module + "/" + module + ".controller.js"),
+		js.load(FileUtils.readFileToString(new File("g:/cms/CmsWebApp/client/app/" + module + "/" + module + ".controller.js"),
 				Charset.forName(charset)));
-		long start = System.currentTimeMillis();
-		 js.scanner().printf();
-		System.out.println((System.currentTimeMillis() - start) / 1000D);
-//		write(js.scanner());
+//				js.load(FileUtils.readFileToString(new File("F:\\lodash.src.js"),Charset.forName(charset)));
+//				js.load(FileUtils.readFileToString(new File("F:\\jquery-baidu-1.10.2.min.js"),Charset.forName(charset)));
+//		double[] times = new double[5];
+//		js.scanner();
+//		for (int i = 0; i < times.length; i++) {
+//			System.gc();
+//			System.gc();
+//			long start = System.currentTimeMillis();
+//			js.scanner();
+//			times[i] = (System.currentTimeMillis() - start) / 1000D;
+////			System.out.println(times[i] = ((System.currentTimeMillis() - start) / 1000D));
+//			System.out.println(times[i]);
+//		}
+		js.scanner().printf();
+		 write(js.scanner());
 	}
 
 	public static void write(JSDocument doc) throws IOException {
