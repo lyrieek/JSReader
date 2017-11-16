@@ -29,8 +29,6 @@ public class JSReader {
 		// double[] times = new double[5];
 		// js.scanner();
 		// for (int i = 0; i < times.length; i++) {
-		// System.gc();
-		// System.gc();
 		// long start = System.currentTimeMillis();
 		// js.scanner();
 		// times[i] = (System.currentTimeMillis() - start) / 1000D;
@@ -39,7 +37,7 @@ public class JSReader {
 		// System.out.println(times[i]);
 		// }
 		js.scanner().printf();
-		write(js.scanner());
+//		write(js.scanner());
 	}
 
 	public static void write(JSDocument doc) throws IOException {

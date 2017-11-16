@@ -7,8 +7,7 @@ public class JSFactory {
 	//text field  number remark
 	private final static String regex = "(([\\$a-zA-Z_]+([0-9]+)?)|"
 			+ "((\\-)?\\d{1,}(\\.{1}\\d+)?)|(/(\\*|/))|\\s+|\\S)";
-	//(\\/\\*(.|\\s)*?\\*\\/)
-
+	
 	public void load(String context) {
 		this.context = context;
 	}

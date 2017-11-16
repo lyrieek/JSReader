@@ -20,11 +20,6 @@ public class JSProcessor extends JsBaseDrive {
 			return result;
 		}
 		result.further();
-		// if (result.is(Status.STRING)) {
-		// string(scanner);
-		// } else if (result.is(Status.REMARK)) {
-		// remark(scanner);
-		// }
 		boolean equals = result.is(Status.STRING) && intercept(storage.getString("last.string.identifier"));
 		equals = equals || (result.is(Status.REMARK) && intercept(storage.getString("last.remark.identifier")));
 		equals = equals || (result.is(Status.REGEX) && item.length() % 2 == 1 && intercept(item));
