@@ -15,8 +15,6 @@ public class ContextBlack {
 
 	private CharPoint startPoint;
 
-//	private CharPoint endPoint;
-
 	private int level;
 
 	private StringBuffer item;

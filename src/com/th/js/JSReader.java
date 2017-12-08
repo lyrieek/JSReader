@@ -17,7 +17,7 @@ public class JSReader {
 	public final static String charset = "UTF-8";
 
 	public static void main(String[] args) throws Exception {
-		String module = "tag"; // member
+		// String module = "tag"; // member
 		JSFactory js = new JSFactory();
 		// js.load(FileUtils.readFileToString(
 		// new File("g:/cms/CmsWebApp/client/app/" + module + "/" + module +
@@ -37,7 +37,7 @@ public class JSReader {
 		// System.out.println(times[i]);
 		// }
 		js.scanner().printf();
-//		write(js.scanner());
+		// write(js.scanner());
 	}
 
 	public static void write(JSDocument doc) throws IOException {
