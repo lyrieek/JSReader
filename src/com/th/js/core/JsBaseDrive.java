@@ -3,7 +3,7 @@ package com.th.js.core;
 import com.th.js.container.AnalysisResult;
 
 /**
- * 驱动处理器 处理器的父类
+ * 驱动处理器 所有处理器的基类
  */
 public abstract class JsBaseDrive {
 

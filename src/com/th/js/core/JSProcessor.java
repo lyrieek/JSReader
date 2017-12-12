@@ -16,7 +16,7 @@ public class JSProcessor extends JsBaseDrive {
 	public AnalysisResult translation(JSScanner scanner) {
 		super.translation(scanner);
 		if (result.is(Status.READ)) {
-			read(scanner);
+			read();
 			return result;
 		}
 		result.further();
@@ -38,7 +38,7 @@ public class JSProcessor extends JsBaseDrive {
 		return true;
 	}
 
-	public void read(JSScanner scanner) {
+	public void read() {
 		if (item.trim().isEmpty()) {
 			result.temporary(Status.EMPTY);
 		} else if (item.equals("=")) {
