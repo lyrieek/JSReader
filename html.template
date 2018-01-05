@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv='content-type' content='text/html;charset=utf-8'>
+		<style type="text/css">
+			li{
+				list-style-type: decimal;
+				padding:0 0;
+			    color:burlywood;
+			    white-space: pre;
+			}
+		</style>
+	</head>
+	<body style='background:#282c34;font-size:21px' contenteditable='true'>
+		<ul style="margin: 0 0;">
+			<li>${content}</li>
+		</ul>
+	</body>
+</html>

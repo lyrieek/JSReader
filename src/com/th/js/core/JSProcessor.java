@@ -65,6 +65,10 @@ public class JSProcessor extends JsBaseDrive {
 		}
 	}
 
+	/**
+	 * 设置拦截器
+	 * @param regex
+	 */
 	public void putIntercept(String regex) {
 		result.lazyCommit();
 		result.clear();

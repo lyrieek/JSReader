@@ -8,10 +8,8 @@ public enum Status {
 	//注释
 	REMARK,
 	
-	//字符串
 	STRING,
 	
-	//数字
 	NUMBER,
 	
 	//符号
@@ -22,10 +20,8 @@ public enum Status {
 	
 	BOOLEAN,
 	
-	//正则
 	REGEX,
 	
-	//空白
 	EMPTY, 
 	
 	//赋值

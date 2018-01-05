@@ -25,7 +25,9 @@ public class JSReader {
 		// Charset.forName(charset)));
 		// js.load(FileUtils.readFileToString(new File("F:\\lodash.src.js"),
 		// Charset.forName(charset)));
-		js.load(FileUtils.readFileToString(new File("F:\\jquery-baidu-1.10.2.min.js"), Charset.forName(charset)));
+		js.load(FileUtils.readFileToString(
+				new File("G:\\cms\\CmsWebApp\\client\\app\\transaction\\transaction.controller.js"),
+				Charset.forName(charset)));
 		// double[] times = new double[5];
 		// js.scanner();
 		// for (int i = 0; i < times.length; i++) {
@@ -36,8 +38,8 @@ public class JSReader {
 		// / 1000D));
 		// System.out.println(times[i]);
 		// }
-		js.scanner().printf();
-		// write(js.scanner());
+		// js.scanner().printf();
+		write(js.scanner());
 	}
 
 	public static void write(JSDocument doc) throws IOException {
@@ -62,14 +64,15 @@ public class JSReader {
 			}
 			buffer.append(item);
 		}
-		FileUtils.write(new File("G:\\th\\js.html"),
-				"<head><meta http-equiv='content-type' content='text/html;charset=utf-8'></head><body style='background:#282c34;font-size:21px' contenteditable='true'><pre>"
-						+ buffer.toString().replace("\n", "<br />"),
-				Charset.forName(charset), false);
+		String content = FileUtils.readFileToString(new File("D:\\th\\workspace\\JSReader\\html.template"),
+				Charset.forName(charset));
+		content = content.replace("${content}",
+				buffer.toString().replaceAll("\n", "</li>\n<li style='white-space: pre;'>"));
+		FileUtils.write(new File("G:\\th\\js.html"), content, Charset.forName(charset), false);
 	}
 
 	private static String wrap(String item, String style) {
-		return ("<label style='$value'>" + item + "</label>").replace("$value", style);
+		return ("<label style='" + style + "'>" + item + "</label>");
 	}
 
 }
