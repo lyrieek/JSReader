@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
-
 import com.th.js.container.ContextBlack;
 import com.th.js.core.JSDocument;
 import com.th.js.core.JSFactory;
 import com.th.js.core.Status;
+import pers.th.util.io.IOUtils;
 
 public class JSReader {
 
@@ -25,8 +23,7 @@ public class JSReader {
 		// Charset.forName(charset)));
 		// js.load(FileUtils.readFileToString(new File("F:\\lodash.src.js"),
 		// Charset.forName(charset)));
-		js.load(FileUtils.readFileToString(
-				new File("G:\\cms\\CmsWebApp\\client\\app\\transaction\\transaction.controller.js"),
+		js.load(IOUtils.reader("G:\\cms\\CmsWebApp\\client\\app\\transaction\\transaction.controller.js",
 				Charset.forName(charset)));
 		// double[] times = new double[5];
 		// js.scanner();
@@ -46,7 +43,7 @@ public class JSReader {
 		StringBuffer buffer = new StringBuffer();
 		for (ContextBlack black : doc.codes()) {
 			String item = black.item();
-			item = StringEscapeUtils.escapeHtml4(item);
+//			item = StringEscapeUtils.escapeHtml4(item);
 			if (black.status() == Status.KEYWORDS) {
 				item = wrap(item, "color:#c678dd;");
 			} else if (black.status() == Status.READ) {
@@ -64,11 +61,11 @@ public class JSReader {
 			}
 			buffer.append(item);
 		}
-		String content = FileUtils.readFileToString(new File("D:\\th\\workspace\\JSReader\\html.template"),
+		String content = IOUtils.reader("D:\\th\\workspace\\JSReader\\html.template",
 				Charset.forName(charset));
 		content = content.replace("${content}",
 				buffer.toString().replaceAll("\n", "</li>\n<li style='white-space: pre;'>"));
-		FileUtils.write(new File("G:\\th\\js.html"), content, Charset.forName(charset), false);
+		IOUtils.write("G:\\th\\js.html", content, Charset.forName(charset));
 	}
 
 	private static String wrap(String item, String style) {
