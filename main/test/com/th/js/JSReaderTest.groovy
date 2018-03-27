@@ -9,7 +9,7 @@ import java.nio.charset.Charset
 
 final String charset = "UTF-8"
 
-static String wrap(String item, String style) {
+static wrap(String item, String style) {
     return ("<label style='${style}'>${item}</label>")
 }
 
@@ -20,25 +20,14 @@ js.load(IOUtils.reader("C:\\Users\\user\\Desktop\\jquery.js",
 StringBuilder buffer = new StringBuilder()
 for (ContextBlack black : js.scanner().codes()) {
     String item = black.item()
+    item = item.replace("<", "&lt;")
+            .replace(">", "&gt;")
+            .replace("&", "&amp;")
+            .replace(" ", "&nbsp;")
 //			item = StringEscapeUtils.escapeHtml4(item);
-    if (black.status() == Status.KEYWORDS) {
-        item = wrap(item, "color:#c678dd;")
-    } else if (black.status() == Status.READ) {
-        item = wrap(item, 'color:#61afef;')
-    } else if (black.status() == Status.REMARK) {
-        item = wrap(item, "color:#5c6370;font-style: italic;")
-    } else if (black.status() == Status.STRING) {
-        item = wrap(item, "color:#98c379;")
-    } else if (black.status() == Status.MARK || black.status() == Status.DECLARE) {
-        item = wrap(item, "color:#abb2bf;")
-    } else if (black.status() == Status.NUMBER || black.status() == Status.BOOLEAN) {
-        item = wrap(item, "color:#d19a66;")
-    } else if (black.status() == Status.REGEX) {
-        item = wrap(item, "color:red;")
-    }
-    buffer.append(item)
+    buffer.append(black.status().html(item))
 }
-String content = IOUtils.reader("C:\\Users\\user\\Desktop\\jquery.js.html", Charset.forName(charset))
-content = content.replace("${content}",
-        buffer.toString().replaceAll("\n", "</li>\n<li style='white-space: pre;'>"))
-IOUtils.write("G:\\th\\js.html", content, Charset.forName(charset))
+def content = buffer.toString().replaceAll("\n", "</li>\n<li style='white-space: pre;'>")
+String template = IOUtils.reader("G:\\idea\\JSReader\\html.template", Charset.forName(charset))
+        .replace("\${content}", content)
+IOUtils.write("G:\\th\\js.html", template, Charset.forName(charset))
