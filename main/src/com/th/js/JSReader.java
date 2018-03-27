@@ -1,13 +1,13 @@
 package com.th.js;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
+		import java.io.IOException;
+		import java.nio.charset.Charset;
 
-import com.th.js.container.ContextBlack;
-import com.th.js.core.JSDocument;
-import com.th.js.core.JSFactory;
-import com.th.js.core.Status;
-import pers.th.util.io.IOUtils;
+		import com.th.js.container.ContextBlack;
+		import com.th.js.core.JSDocument;
+		import com.th.js.core.JSFactory;
+		import com.th.js.core.Status;
+		import pers.th.util.io.IOUtils;
 
 public class JSReader {
 
@@ -38,7 +38,7 @@ public class JSReader {
 		write(js.scanner());
 	}
 
-	public static void write(JSDocument doc) throws IOException {
+	private static void write(JSDocument doc) throws IOException {
 		StringBuilder buffer = new StringBuilder();
 		for (ContextBlack black : doc.codes()) {
 			String item = black.item();
