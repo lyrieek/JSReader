@@ -1,10 +1,7 @@
 ### JSReader
->> ## 运行JSReader类
->>替换js.load的源文件地址为你的JS
->>替换FileUtils.write的输出文件地址为一个HTML文件地址(小心,这个文件会被覆盖)
+>> ## 运行JSReader/main/test/com/th/js/JSReaderTest.groovy
+>>替换input & output(小心,output会被覆盖)
 >>run
 >>打开输出文件,你将看到一个仿Atom的默认代码渲染效果
-
-这是个造孽的项目，我实在太懒，没能好好打理这个完全没有任何实际作用的东西，这东西是用eclipse写出来的，
 
 # 保护视力，从我做起，千万不要看
