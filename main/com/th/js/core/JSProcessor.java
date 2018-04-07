@@ -8,8 +8,8 @@ import com.th.js.container.AnalysisResult;
  */
 public class JSProcessor extends JsBaseDrive {
 
-	public JSProcessor(Variables vals) {
-		super(vals);
+	JSProcessor(Variables val) {
+		super(val);
 	}
 
 	@Override
@@ -45,13 +45,13 @@ public class JSProcessor extends JsBaseDrive {
 			result.temporary(Status.DECLARE);
 		} else if (item.length() == 1 && KeyWords.MARKS.contains(item)) {
 			result.temporary(Status.MARK);
-		} else if (item.matches("((\\-)?\\d{1,}(\\.{1}\\d+)?)")) {
+		} else if (item.matches("((-)?\\d+(\\.\\d+)?)")) {
 			result.temporary(Status.NUMBER);
 		} else if (KeyWords.contains(item)) {
 			result.temporary(Status.KEYWORDS);
 		} else if (item.equals("true") || item.equals("false")) {
 			result.temporary(Status.BOOLEAN);
-		} else if (item.matches("('|\"|`)")) {
+		} else if (item.matches("(['\"`])")) {
 			result.change(Status.STRING);
 			putIntercept("(\\\\)?" + item);
 			storage.update("last.string.identifier", item);

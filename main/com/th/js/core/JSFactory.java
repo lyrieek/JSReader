@@ -1,5 +1,8 @@
 package com.th.js.core;
 
+import com.th.js.execption.ContextException;
+import pers.th.util.text.XStrings;
+
 public class JSFactory {
 
 	private String context;
@@ -9,6 +12,9 @@ public class JSFactory {
 			+ "((\\-)?\\d{1,}(\\.{1}\\d+)?)|(/(\\*|/))|\\s+|\\S)";
 	
 	public void load(String context) {
+		if (XStrings.isEmpty(context)) {
+		    throw new ContextException("context is null");
+		}
 		this.context = context;
 	}
 
