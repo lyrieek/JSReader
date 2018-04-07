@@ -29,16 +29,16 @@ public class JSFactory {
 		RootManager manager = new RootManager();
 		
 		//处理器
-		JSProcessor handle = new JSProcessor(var);
+		JSParses parses = new JSParses(var);
 		while (reader.hasNext()) {
 			//处理器读取管理器当前参数
-			handle.instance(manager);
+			parses.instance(manager);
 			
 			//处理器开始依据当前文本翻译代码
-			handle.translation(reader);
+			parses.translation(reader);
 			
 			//管理器接收处理器的翻译结果
-			manager.receive(handle.getResult());
+			manager.receive(parses.result());
 		}
 		return manager.getDocument();
 	}

@@ -9,12 +9,12 @@ public abstract class JsBaseDrive {
 
 	protected AnalysisResult result;
 	protected Variables storage;
-	protected JSScanner scanner;
 	protected String item;
+	JSScanner scanner;
 
-	public JsBaseDrive(Variables vals) {
+	JsBaseDrive(Variables val) {
 		result = new AnalysisResult();
-		storage = vals;
+		storage = val;
 	}
 
 	public void clear() {
@@ -37,14 +37,14 @@ public abstract class JsBaseDrive {
 
 	/**
 	 * 实例化自身参数
-	 * @param manager
+	 * @param manager 主管理器
 	 */
 	public void instance(RootManager manager) {
 		result.restore();
 		manager.fullDrive(this);
 	}
 	
-	public AnalysisResult getResult() {
+	public AnalysisResult result() {
 		return result;
 	}
 	
