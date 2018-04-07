@@ -23,8 +23,6 @@ public abstract class JsBaseDrive {
 
 	/**
 	 * 解释JS
-	 * @param item
-	 * @return
 	 */
 	public AnalysisResult translation(JSScanner scanner) {
 		if (result == null) {
