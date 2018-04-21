@@ -3,13 +3,13 @@ package com.th.js.core;
 import com.th.js.container.AnalysisResult;
 
 /**
- * 处理器
+ * js 解释器
  *
  */
-public class JSProcessor extends JsBaseDrive {
+public class JSParses extends JsBaseDrive {
 
-	public JSProcessor(Variables vals) {
-		super(vals);
+	JSParses(Variables val) {
+		super(val);
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class JSProcessor extends JsBaseDrive {
 		return result;
 	}
 
-	public boolean intercept(String equalsText) {
+	private boolean intercept(String equalsText) {
 		if (!item.equals(equalsText)) {
 			result.lazyCommit();
 			return false;
@@ -38,20 +38,20 @@ public class JSProcessor extends JsBaseDrive {
 		return true;
 	}
 
-	public void read() {
+	private void read() {
 		if (item.trim().isEmpty()) {
 			result.temporary(Status.EMPTY);
 		} else if (item.equals("=")) {
 			result.temporary(Status.DECLARE);
 		} else if (item.length() == 1 && KeyWords.MARKS.contains(item)) {
 			result.temporary(Status.MARK);
-		} else if (item.matches("((\\-)?\\d{1,}(\\.{1}\\d+)?)")) {
+		} else if (item.matches("((-)?\\d+(\\.\\d+)?)")) {
 			result.temporary(Status.NUMBER);
 		} else if (KeyWords.contains(item)) {
 			result.temporary(Status.KEYWORDS);
 		} else if (item.equals("true") || item.equals("false")) {
 			result.temporary(Status.BOOLEAN);
-		} else if (item.matches("('|\"|`)")) {
+		} else if (item.matches("'\"`")) {
 			result.change(Status.STRING);
 			putIntercept("(\\\\)?" + item);
 			storage.update("last.string.identifier", item);
@@ -67,9 +67,9 @@ public class JSProcessor extends JsBaseDrive {
 
 	/**
 	 * 设置拦截器
-	 * @param regex
+	 * @param regex 正则
 	 */
-	public void putIntercept(String regex) {
+	private void putIntercept(String regex) {
 		result.lazyCommit();
 		result.clear();
 		storage.update("last.point", result.point());

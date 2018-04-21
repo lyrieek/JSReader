@@ -39,7 +39,7 @@ public enum Status {
     }
 
     Status(String style, String attribute) {
-        styles = style;
+        this(style);
         attributes = attribute;
     }
 
@@ -57,9 +57,13 @@ public enum Status {
             before += attributes + " ";
         }
         if (styles != null && !styles.isEmpty()) {
-            before += "style='" + styles + "' ";
+            before += "style='" + styles() + "' ";
         }
-        return before + ">" + content + "</label>";
+        return before + ">" + content
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("&", "&amp;")
+                .replace(" ", "&nbsp;") + "</label>";
     }
 
 }
