@@ -5,9 +5,9 @@
 		<style type="text/css">
 			li{
 				list-style-type: decimal;
-				padding:0 0;
-			    color:burlywood;
-			    white-space: pre;
+				padding: 0 0;
+			    	color: burlywood;
+			    	white-space: pre;
 			}
 		</style>
 	</head>
