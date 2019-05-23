@@ -16,7 +16,5 @@ JSReader/main/test/com/th/js/JSReaderTest.groovy
 ### 结果
 打开output输出文件,得到被渲染的HTML
 
-### 合约与版权
+### 合约与许可证
 没有
-
-## 保护视力，从我做起，千万不要看
